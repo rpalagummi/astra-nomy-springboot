@@ -1,0 +1,49 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head th:include="header :: head"></head>
+<body>
+ <div class="navbar navbar-fixed-top" th:include="navbar :: navbar"></div>
+ <div class="subnavbar" th:include="navbar :: subnavbar"></div>
+  <div id="wrapper" class="container">
+    <div id="content" class="clearfix">
+	  <div class="main-inner" style="margin-top: 60px">
+	   <div class="container">
+        <div class="row">
+		 <div class="span12">
+		 
+		  <div class="widget widget-nopad">
+		   <div class="widget-header">
+			<i class="icon-wrench"></i>
+			<h3> Sample Application using Stargate  
+			 <span style="color:#EB6C34">Document API</span> and Astra  
+			</h3>
+		   </div>
+           <div class="widget-content"  style="padding:10px">
+           
+           <h3>Create Document</h3>
+           <div class="widget-content"  style="padding:10px">
+    		<form action="#" th:action="@{/createdoc}" th:object="${personModel}" method="post">
+	    		<p><th style="width:200px;text-align:center">DocumentID</th> : <input type="text"  th:field="*{docId}" /></p>
+	    		<p><th style="width:500px;text-align:center">JSON Data </th> : <textarea th:field="*{content}" rows="10" cols="80"> </textarea></p>
+	        	<p><input type="submit" value="Create" /> <input type="reset" value="Reset" /></p>
+    		</form>
+  		   </div>
+      </div> <!-- div widget-content -->
+      
+	 </div> <!-- div widget -->
+	</div> 	<!-- span6 -->	
+
+	
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+
+
+<div th:include="modals :: modal-about"></div>
+
+</body>
+</html>

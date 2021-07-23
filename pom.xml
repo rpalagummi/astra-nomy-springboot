@@ -1,0 +1,192 @@
+	<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.datastax</groupId>
+	<artifactId>astranomy-app</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>astranomy-app</name>
+	<description>USe SDK and Spring boot</description>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.1</version>
+		<relativePath />
+	</parent>
+
+	<properties>
+		<java.version>11</java.version>
+		<astra-starter.version>0.1.13</astra-starter.version>
+		<!-- <spring.version>5.3.8</spring.version>
+		<spring-security.version>5.5.1</spring-security.version> -->
+		<maven-plugin-compiler.version>3.8.1</maven-plugin-compiler.version>
+		<!-- Astra Pulsar Version -->
+		<pulsar.version>2.7.2</pulsar.version>
+	</properties>
+
+	<dependencies>
+		
+		<!-- Spring React Web -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<!-- Rest -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- Web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<!-- Starter -->
+		<dependency>
+			<groupId>com.datastax.astra</groupId>
+			<artifactId>astra-spring-boot-starter</artifactId>
+			<version>${astra-starter.version}</version>
+		</dependency>
+		<!-- Astra -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-cassandra</artifactId>
+		</dependency>
+		<!-- Spring oAuth2 Security -->
+		<!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+        -->
+		 <dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-oauth2-client</artifactId>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.apache.pulsar</groupId>
+		  <artifactId>pulsar-client</artifactId>
+		  <version>${pulsar.version}</version>
+		</dependency>
+		
+		
+		<!--  <dependency>
+      		<groupId>org.springframework.boot</groupId>
+      		<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		-->
+		
+		<!-- Tests -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+		
+	</dependencies>
+	
+	
+
+	<!-- Enable JDK 11 and Junit 5 -->
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.1</version>
+					<configuration>
+						<testFailureIgnore>true</testFailureIgnore>
+						
+						<systemProperties>
+						<!--  CREDENTIALS -->
+						<property>
+							<name>ASTRA_DB_ID</name>
+							<value>397d302e-1a86-4186-aec9-bf45a1f7b511</value>
+						</property>
+						<property>
+							<name>ASTRA_DB_CLIENT_ID</name>
+							<value>tnlKAtjrRvOIwOkZtlhTNWWG</value>
+						</property>
+						<property>
+							<name>ASTRA_DB_CLIENT_SECRET</name>
+							<value>w82CenP3UUjU_Te0Z8vc6WG.1k.CSl5S4KS5QHgCG2,nv-0mdYBk,UBa8Bp4zdyjGBpw8FQ2NfXj7FBGK.gpkjcL76qtSI3bLbR+lS4c-Mkjk2FJOMCCzUoUK+N25JOJ</value>
+						</property>
+						<property>
+							<name>ASTRA_DB_APPLICATION_TOKEN</name>
+							<value>AstraCS:tnlKAtjrRvOIwOkZtlhTNWWG:8404f8a0c6130fac0f8aa5bc94b294113c8d52bdda131956c69c2fb90f6b7c5c</value>
+						</property>
+						<property>
+							<name>ASTRA_DB_KEYSPACE</name>
+							<value>enterprise</value>
+						</property>
+						<property>
+							<name>ASTRA_DB_REGION</name>
+							<value>us-east-1</value>
+						</property>
+					</systemProperties>
+						
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-plugin-compiler.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.datastax.astra.SampleApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

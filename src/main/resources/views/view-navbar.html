@@ -1,0 +1,67 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="navbar">
+ <div class="navbar-inner">
+  <div class="container">
+
+   <a class="brand" href="/" style="">
+    <img src="" th:src="@{/img/datastax-white-logo.svg}" height="35px" style="height:35px"/>
+    &nbsp; &nbsp; &nbsp;
+    <!-- <span th:text="#{navbar.title}" style="color:orange;margin-top:15px"> YASA </span> -->
+   </a>
+        
+   <div class="nav-collapse"  style="margin-top:15px">
+   	<ul class="nav pull-right">
+	  
+	 <li class="dropdown">
+	  
+	  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	   <span th:if="${#locale.language == 'en'}">
+	    <img src="" th:src="@{/img/flags/flagEnglish.png}" style="height:20px" /> 
+	   </span>
+	   <span th:if="${#locale.language == 'fr'}">
+	    <img src="" th:src="@{/img/flags/flagFrance.png}" style="height:20px" /> 
+	   </span>
+       <span th:text="${#locale.language}">locale</span>
+       <b class="caret"></b>
+      </a>
+      
+      <ul class="dropdown-menu">
+      	<li><a href="?lang=en"><img src="" th:src="@{/img/flags/flagEnglish.png}" style="height:15px" />&nbsp;English</a></li>
+        <li><a href="?lang=fr"><img src="" th:src="@{/img/flags/flagFrance.png}"  style="height:15px" />&nbsp;Français</a></li>
+      </ul>
+      
+	</li>
+     
+	</ul>
+   </div>
+  </div>
+ </div>
+</div>
+
+<div th:fragment="subnavbar">
+ <div class="subnavbar-inner">
+  <div class="container">
+   <ul class="mainnav">
+    
+    <li class="active2">
+     <a href="/hackathon" >
+      <i class="icon-home"></i>
+       <span th:text="#{navbar.main.home}" >Home</span>
+     </a>
+    </li>
+       <li>
+          <a data-toggle="modal" href="#modalAbout">
+           <i class="icon-info"></i> 
+           <span th:text="#{navbar.main.about}" >About</span>
+           </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

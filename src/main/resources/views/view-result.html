@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	
+</body>
+</html>
+
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head th:include="header :: head"></head>
+<body>
+ <div class="navbar navbar-fixed-top" th:include="navbar :: navbar"></div>
+ <div class="subnavbar" th:include="navbar :: subnavbar"></div>
+  <div id="wrapper" class="container">
+    <div id="content" class="clearfix">
+	  <div class="main-inner" style="margin-top: 60px">
+	   <div class="container">
+        <div class="row">
+		 <div class="span12">
+		 
+		  <div class="widget widget-nopad">
+		   <div class="widget-header">
+			<i class="icon-wrench"></i>
+			<h3> Sample Application using Stargate  
+			 <span style="color:#EB6C34">Document API</span> and Astra  
+			</h3>
+		   </div>
+           <div class="widget-content"  style="padding:10px">
+           
+           <h1>Result</h1>
+			    Successfully Created the JSON Document with ID : <p th:text="'id: ' + ${personModel.docId}" />
+			    <a href="/greeting">Submit another message</a>
+  		
+      	</div> <!-- div widget-content -->
+      
+	 </div> <!-- div widget -->
+	</div> 	<!-- span6 -->	
+
+	
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+
+
+<div th:include="modals :: modal-about"></div>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head th:include="header :: head"></head>
+<body>
+ <div class="navbar navbar-fixed-top" th:include="navbar :: navbar"></div>
+ <div class="subnavbar" th:include="navbar :: subnavbar"></div>
+  <div id="wrapper" class="container">
+    <div id="content" class="clearfix">
+	  <div class="main-inner" style="margin-top: 60px">
+	   <div class="container">
+        <div class="row">
+		 <div class="span12">
+		 
+		  <div class="widget widget-nopad">
+		   <div class="widget-header">
+           		<h2><span style="color:#EB6C34">Astranomy</span> Demonstrating the Power & Simplicity of Astra DB</h2>
+			</div>
+                        <p></p>
+                        <p></p>
+                        <p style="text-align:center;">
+                        	<img src="/img/architecture.png" usemap="#image-map">
+                        </p>
+                            
+                            <map name="image-map">
+							    <area target="" alt="DocumentAPI" title="DocumentAPI" href="/simulateIoT" coords="208,276,410,388" shape="rect">
+							    <area target="" alt="RestAPI" title="RestAPI" href="/banktransactions" coords="456,19,605,227" shape="rect">
+							    <area target="" alt="GraphQL" title="GraphQL" href="/searchtransactions" coords="601,275,820,391" shape="rect">
+							    <area target="" alt="Pulsar Streaming" title="Pulsar Streaming" href="/batch" coords="502,478,1148,605" shape="rect">
+							</map>
+                           <!--  
+                        <map name="architecturemap">
+                            <area title="restAPI" href="/banktransactions" coords="579,163,459,9" shape="rect">
+                            <area class="hackmap" target="" alt="" title="streaming" href="" coords="462,350,3,505"
+                                shape="rect">
+                            <area title="graphQLAPI" href="/searchtransactions" coords="227,319,424,229" shape="rect">
+                            <area class="hackmap" title="cqlAPI" href="" coords="605,227,732,344" shape="rect">
+                            <area title="iotDocAPI" href="/simulateIoT" coords="264,135,330,91,440,184,398,214"
+                                shape="poly">
+                            <area title="batchDocAPI" href="/batch"
+                                coords="578,177,676,100,748,98,748,153,605,215" shape="poly">
+                        </map>
+                        -->
+<!--                         <div id="status" class="mt-4 alert alert-success" role="alert">Messages</div> -->
+	</div> 	<!-- span6 -->	
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+
+
+<div th:include="modals :: modal-about"></div>
+<script th:inline="javascript">
+
+            
+            $(".hackmap").on("click", function (e) {
+                e.preventDefault();
+
+                var test = e.target.title;
+                console.log('test ' + test);
+
+                if (test == "restAPI") {
+                	$('#status').html("User Transactions Running");
+                    $.get("/banktransactions", function (result) {
+                        $('#status').html(result);
+                    });
+                } else if (test == "graphQLAPI") {
+                	$('#status').html("Running User Transactions");
+                    $.get("/searchtransactions", function (result) {
+                        $('#status').html(result);
+                    });
+                } else if (test == "cqlAPI") {
+                } else if (test == "iotDocAPI") {
+                	$('#status').html("Running IoT Simulation");
+                    $.get("/simulateIoT", function (result) {
+                        $('#status').html(result);
+                    });
+                } else if (test == "batchDocAPI") {
+                	$('#status').html("Running Batch update of Pending Transactions");
+                    $.get("/batch", function (result) {
+                        $('#status').html(result);
+                    });
+                }  
+
+            });
+
+        </script>
+
+</body>
+</html>
