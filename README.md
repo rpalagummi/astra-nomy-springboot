@@ -1,4 +1,4 @@
-# "Astra"-nomy Spring-Boot Java Starter Application powered by DataStax Astra.
+# Astra-nomy SpringBoot Java Starter Application powered by DataStax Astra.
 </br>
 This code provides a starter Springboot Maven Java App with all the necessary Jars and examples to build Astra based applications using REST, Document, GraphQL and CQL APIs. You can start off your development with this App
 </br>
