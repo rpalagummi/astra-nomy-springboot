@@ -1,15 +1,10 @@
-package com.datastax.yasa.home;
+package com.datastax.enterprise.home;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -25,21 +20,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.datastax.astra.sdk.AstraClient;
+import com.datastax.enterprise.docapi.banking.BankingTransactionRepository;
+import com.datastax.enterprise.docapi.banking.PendingTransaction;
+import com.datastax.enterprise.docapi.banking.TransactionMapper;
+import com.datastax.enterprise.docapi.iot.CSV;
+import com.datastax.enterprise.docapi.iot.IoTRepository;
+import com.datastax.enterprise.docapi.iot.Power;
+import com.datastax.enterprise.docapi.person.Person;
+import com.datastax.enterprise.docapi.person.PersonModel;
+import com.datastax.enterprise.docapi.person.PersonRepository;
+import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import com.datastax.stargate.sdk.doc.ApiDocument;
 import com.datastax.stargate.sdk.rest.ApiRestClient;
 import com.datastax.stargate.sdk.rest.TableClient;
 import com.datastax.stargate.sdk.rest.domain.Row;
 import com.datastax.stargate.sdk.rest.domain.RowResultPage;
 import com.datastax.stargate.sdk.rest.domain.SearchTableQuery;
-import com.datastax.yasa.docapi.banking.BankingRepository;
-import com.datastax.yasa.docapi.banking.PendingTransaction;
-import com.datastax.yasa.docapi.banking.TransactionMapper;
-import com.datastax.yasa.docapi.iot.CSV;
-import com.datastax.yasa.docapi.iot.IoTRepository;
-import com.datastax.yasa.docapi.iot.Power;
-import com.datastax.yasa.docapi.person.Person;
-import com.datastax.yasa.docapi.person.PersonModel;
-import com.datastax.yasa.docapi.person.PersonRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,7 +48,7 @@ public class TransactionController {
 	private AstraClient astraClient;
 	
 	@Autowired
-	private BankingRepository repository;
+	private BankingTransactionRepository repository;
 	
 	@Autowired
 	private PersonRepository homeRepository;
@@ -246,18 +242,32 @@ public class TransactionController {
 	           		 
 	           		 System.out.println(" Rows with Status Pending = "+list.size());
 	           		 
+	           		String TABLE_NAME = WORKING_KEYSPACE+"."+WORKING_TABLE;
+	           		 
 	           		 for(PendingTransaction pt : list) {
 	           			 
-	           			 Map<String, Object> data = new HashMap<>();
-	           		        data.put("transaction_id", pt.getTransactionId());
-	           		        data.put("user_id", pt.getUserId());
-	           		        data.put("message", pt.getMessage());
-	           		        data.put("created_by", pt.getCreatedBy());
-	           		        data.put("status", "Complete");
-	           		        data.put("correlation_id", pt.getCorrelationId());
-	           		        data.put("created_dt", LocalDateTime.now().format(myFormatObj));
-	           				
-	           		        transactionTable.upsert(data);
+//	           			 Map<String, Object> data = new HashMap<>();
+//	           		        data.put("transaction_id", pt.getTransactionId());
+//	           		        data.put("user_id", pt.getUserId());
+//	           		        data.put("message", pt.getMessage());
+//	           		        data.put("created_by", pt.getCreatedBy());
+//	           		        data.put("status", "Complete");
+//	           		        data.put("correlation_id", pt.getCorrelationId());
+//	           		        data.put("created_dt", LocalDateTime.now().format(myFormatObj));
+//	           				
+//	           		        transactionTable.upsert(data);
+	           			 
+	           			/* Using CQL API Begin */
+	           		        
+	           		     SimpleStatement stmt = SimpleStatement.builder("UPDATE "+TABLE_NAME+ " SET status = \'Complete\' WHERE transaction_id = ? AND correlation_id = ?")
+	         	        		.addPositionalValue(pt.getTransactionId())
+	         	        		.addPositionalValue(pt.getCorrelationId())
+	         	                .build();
+	           		     
+	           		     astraClient.cqlSession().execute(stmt);
+	           		     
+	           		    /* Using CQL API END */
+	           			 
 	           		 }
 	                }
 
