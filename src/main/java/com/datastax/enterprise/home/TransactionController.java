@@ -263,7 +263,6 @@ public class TransactionController {
 
 	            } while (!receivedMsg);
 	            
-	            
 
 	            //Close the consumer
 	            consumer.close();
