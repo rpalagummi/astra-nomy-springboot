@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.person;
+package com.datastax.enterprise.docapi.person;
 
 public class PersonModel {
 	

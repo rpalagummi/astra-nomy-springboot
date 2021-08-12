@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.banking;
+package com.datastax.enterprise.docapi.banking;
 
 import com.datastax.stargate.sdk.rest.domain.Row;
 import com.datastax.stargate.sdk.rest.domain.RowMapper;

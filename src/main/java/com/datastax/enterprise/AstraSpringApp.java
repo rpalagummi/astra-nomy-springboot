@@ -1,4 +1,4 @@
-package com.datastax.yasa;
+package com.datastax.enterprise;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import org.springframework.web.client.RestTemplate;
 
 
 @SpringBootApplication
-public class YasaApp {
+public class AstraSpringApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(YasaApp.class, args);
+        SpringApplication.run(AstraSpringApp.class, args);
         
     }
     

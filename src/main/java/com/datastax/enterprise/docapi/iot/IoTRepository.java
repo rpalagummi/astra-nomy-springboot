@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.iot;
+package com.datastax.enterprise.docapi.iot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

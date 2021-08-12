@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.banking;
+package com.datastax.enterprise.docapi.banking;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,18 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.datastax.astra.sdk.AstraClient;
+import com.datastax.enterprise.docapi.person.Person.Address;
 import com.datastax.stargate.sdk.rest.ApiRestClient;
 import com.datastax.stargate.sdk.doc.ApiDocument;
 import com.datastax.stargate.sdk.doc.CollectionClient;
 import com.datastax.stargate.sdk.doc.StargateDocumentRepository;
 import com.datastax.stargate.sdk.doc.domain.DocumentResultPage;
 import com.datastax.stargate.sdk.doc.domain.SearchDocumentQuery;
-import com.datastax.yasa.docapi.person.Person.Address;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Banking Transactions Repository, we want to show the gate.
+ *
+ * @author Ram Palagummi 
+ */
 @Repository
-public class BankingRepository extends StargateDocumentRepository<PendingTransaction> {
+public class BankingTransactionRepository extends StargateDocumentRepository<PendingTransaction> {
     
     
 	private static final String WORKING_NAMESPACE    = "enterprise";
@@ -41,7 +46,7 @@ public class BankingRepository extends StargateDocumentRepository<PendingTransac
      * @param astraClient
      *      client for Astra
      */
-    public BankingRepository(AstraClient astraClient) {
+    public BankingTransactionRepository(AstraClient astraClient) {
         super(astraClient.getStargateClient(), 
               astraClient.cqlSession().getKeyspace().get().toString());
         collectionClient = astraClient.apiStargateDocument().namespace(WORKING_NAMESPACE).collection(COLLECTION_PENDING_TRANSACTIONS);
@@ -88,17 +93,16 @@ public class BankingRepository extends StargateDocumentRepository<PendingTransac
     }
     
     public void updateDocuments(String column, String currentValue, String toValue) {
-    	int i=0;
+    	
     	List<ApiDocument<PendingTransaction>> results = searchTransactionsWithQuery(column, currentValue);
     	for (ApiDocument<PendingTransaction> pendingTransaction : results) {
-//          Assert.assertNotNull(Person);
           
     		PendingTransaction pt = pendingTransaction.getDocument();
     		pt.setStatus(toValue);
     		updateTransaction(pendingTransaction.getDocumentId(), pt);
-    		i++;
     	}
-    	System.out.println(" Total Transactions updated = "+i);
+    	System.out.println(" Total Transactions updated = "+results.size());
+    	
     }
     
     public String updateSubDocument(String docId, String path, Address a) {

@@ -1,4 +1,4 @@
-package com.datastax.yasa.home;
+package com.datastax.enterprise.home;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.datastax.enterprise.docapi.banking.PendingTransaction;
+import com.datastax.enterprise.docapi.person.Person;
+import com.datastax.enterprise.docapi.person.PersonModel;
+import com.datastax.enterprise.docapi.person.PersonRepository;
+import com.datastax.enterprise.docapi.person.Person.Address;
 import com.datastax.stargate.sdk.doc.ApiDocument;
-import com.datastax.yasa.docapi.banking.PendingTransaction;
-import com.datastax.yasa.docapi.person.Person;
-import com.datastax.yasa.docapi.person.Person.Address;
-import com.datastax.yasa.docapi.person.PersonModel;
-import com.datastax.yasa.docapi.person.PersonRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

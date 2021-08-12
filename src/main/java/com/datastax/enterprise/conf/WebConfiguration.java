@@ -1,4 +1,4 @@
-package com.datastax.yasa.conf;
+package com.datastax.enterprise.conf;
 
 import java.util.Locale;
 

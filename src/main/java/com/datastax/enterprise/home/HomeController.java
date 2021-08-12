@@ -1,4 +1,4 @@
-package com.datastax.yasa.home;
+package com.datastax.enterprise.home;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,14 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.datastax.astra.sdk.AstraClient;
+import com.datastax.enterprise.docapi.banking.PendingTransaction;
+import com.datastax.enterprise.docapi.banking.TransactionMapper;
+import com.datastax.enterprise.docapi.person.Person;
+import com.datastax.enterprise.docapi.person.PersonRepository;
 import com.datastax.stargate.sdk.doc.ApiDocument;
 import com.datastax.stargate.sdk.rest.ApiRestClient;
 import com.datastax.stargate.sdk.rest.TableClient;
 import com.datastax.stargate.sdk.rest.domain.SearchTableQuery;
-import com.datastax.yasa.docapi.banking.PendingTransaction;
-import com.datastax.yasa.docapi.banking.TransactionMapper;
-import com.datastax.yasa.docapi.person.Person;
-import com.datastax.yasa.docapi.person.PersonRepository;
 
 
 /**

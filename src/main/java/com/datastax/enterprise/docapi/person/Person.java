@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.person;
+package com.datastax.enterprise.docapi.person;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.person;
+package com.datastax.enterprise.docapi.person;
 
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;

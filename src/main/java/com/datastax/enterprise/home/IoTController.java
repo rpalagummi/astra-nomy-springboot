@@ -1,4 +1,4 @@
-package com.datastax.yasa.home;
+package com.datastax.enterprise.home;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.datastax.enterprise.docapi.banking.BankingTransactionRepository;
+import com.datastax.enterprise.docapi.iot.CSV;
+import com.datastax.enterprise.docapi.iot.IoTRepository;
+import com.datastax.enterprise.docapi.iot.Power;
+import com.datastax.enterprise.docapi.person.Person;
+import com.datastax.enterprise.docapi.person.PersonModel;
+import com.datastax.enterprise.docapi.person.PersonRepository;
 import com.datastax.stargate.sdk.doc.ApiDocument;
-import com.datastax.yasa.docapi.banking.BankingRepository;
-import com.datastax.yasa.docapi.iot.CSV;
-import com.datastax.yasa.docapi.iot.IoTRepository;
-import com.datastax.yasa.docapi.iot.Power;
-import com.datastax.yasa.docapi.person.Person;
-import com.datastax.yasa.docapi.person.PersonModel;
-import com.datastax.yasa.docapi.person.PersonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class IoTController {
 
 	@Autowired
-	private BankingRepository repository;
+	private BankingTransactionRepository repository;
 	
 	@Autowired
 	private PersonRepository homeRepository;

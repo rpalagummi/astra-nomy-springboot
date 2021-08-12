@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.banking;
+package com.datastax.enterprise.docapi.banking;
 
 public class PendingTransaction {
 	

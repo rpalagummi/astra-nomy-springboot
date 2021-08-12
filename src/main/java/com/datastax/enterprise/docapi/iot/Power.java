@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.iot;
+package com.datastax.enterprise.docapi.iot;
 
 public class Power {
 	

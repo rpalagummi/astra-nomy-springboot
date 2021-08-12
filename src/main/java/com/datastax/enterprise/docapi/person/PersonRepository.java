@@ -1,4 +1,4 @@
-package com.datastax.yasa.docapi.person;
+package com.datastax.enterprise.docapi.person;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.datastax.astra.sdk.AstraClient;
+import com.datastax.enterprise.docapi.person.Person.Address;
 import com.datastax.stargate.sdk.rest.ApiRestClient;
 import com.datastax.stargate.sdk.doc.ApiDocument;
 import com.datastax.stargate.sdk.doc.CollectionClient;
 import com.datastax.stargate.sdk.doc.StargateDocumentRepository;
 import com.datastax.stargate.sdk.doc.domain.DocumentResultPage;
 import com.datastax.stargate.sdk.doc.domain.SearchDocumentQuery;
-import com.datastax.yasa.docapi.person.Person.Address;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
