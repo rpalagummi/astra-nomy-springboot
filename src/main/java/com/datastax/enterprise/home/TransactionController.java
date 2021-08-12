@@ -246,16 +246,6 @@ public class TransactionController {
 	           		 
 	           		 for(PendingTransaction pt : list) {
 	           			 
-//	           			 Map<String, Object> data = new HashMap<>();
-//	           		        data.put("transaction_id", pt.getTransactionId());
-//	           		        data.put("user_id", pt.getUserId());
-//	           		        data.put("message", pt.getMessage());
-//	           		        data.put("created_by", pt.getCreatedBy());
-//	           		        data.put("status", "Complete");
-//	           		        data.put("correlation_id", pt.getCorrelationId());
-//	           		        data.put("created_dt", LocalDateTime.now().format(myFormatObj));
-//	           				
-//	           		        transactionTable.upsert(data);
 	           			 
 	           			/* Using CQL API Begin */
 	           		        
