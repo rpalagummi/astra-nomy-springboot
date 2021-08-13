@@ -1,4 +1,4 @@
-package com.datastax.enterprise.home;
+package com.datastax.enterprise.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.datastax.astra.sdk.AstraClient;
-import com.datastax.enterprise.docapi.banking.PendingTransaction;
-import com.datastax.enterprise.docapi.banking.TransactionMapper;
+import com.datastax.enterprise.banking.PendingTransaction;
+import com.datastax.enterprise.banking.TransactionMapper;
 import com.datastax.enterprise.docapi.person.Person;
 import com.datastax.enterprise.docapi.person.PersonRepository;
 import com.datastax.stargate.sdk.doc.ApiDocument;

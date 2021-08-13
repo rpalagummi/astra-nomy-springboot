@@ -1,4 +1,4 @@
-package com.datastax.enterprise.docapi.banking;
+package com.datastax.enterprise.banking;
 
 import com.datastax.stargate.sdk.rest.domain.Row;
 import com.datastax.stargate.sdk.rest.domain.RowMapper;
@@ -10,6 +10,7 @@ public class TransactionMapper implements RowMapper<PendingTransaction>{
 	public PendingTransaction map(Row row) {
 		
 		PendingTransaction pt = new PendingTransaction();
+		
 		pt.setCorrelationId(row.getInt("correlation_id"));
 		pt.setCreatedBy(row.getString("created_by"));
 		pt.setMessage(row.getString("message"));

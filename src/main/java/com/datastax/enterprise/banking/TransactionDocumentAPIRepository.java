@@ -1,4 +1,4 @@
-package com.datastax.enterprise.docapi.banking;
+package com.datastax.enterprise.banking;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Ram Palagummi 
  */
 @Repository
-public class BankingTransactionRepository extends StargateDocumentRepository<PendingTransaction> {
+public class TransactionDocumentAPIRepository extends StargateDocumentRepository<PendingTransaction> {
     
     
 	private static final String WORKING_NAMESPACE    = "enterprise";
@@ -46,7 +46,7 @@ public class BankingTransactionRepository extends StargateDocumentRepository<Pen
      * @param astraClient
      *      client for Astra
      */
-    public BankingTransactionRepository(AstraClient astraClient) {
+    public TransactionDocumentAPIRepository(AstraClient astraClient) {
         super(astraClient.getStargateClient(), 
               astraClient.cqlSession().getKeyspace().get().toString());
         collectionClient = astraClient.apiStargateDocument().namespace(WORKING_NAMESPACE).collection(COLLECTION_PENDING_TRANSACTIONS);
@@ -54,10 +54,7 @@ public class BankingTransactionRepository extends StargateDocumentRepository<Pen
     
     @PostConstruct
     public void generateBitData() {
-        //Address a1 = new Address(20, "Champ Elysees", "PARIS", 75008);
-        //create(new Person("Cedrick", "Lunven", "lala@hotmail.com", Arrays.asList(a1)));
-        //create(new Person("John", "Connor", "jc@hotmail.com", Arrays.asList(a1)));
-        //create(new Person("RAM", "RAM", "jc@hotmail.com", Arrays.asList(a1)));
+        
     }
     
     /**

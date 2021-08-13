@@ -1,4 +1,4 @@
-package com.datastax.enterprise.home;
+package com.datastax.enterprise.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import org.apache.pulsar.client.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +16,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.datastax.astra.sdk.AstraClient;
-import com.datastax.enterprise.docapi.banking.BankingTransactionRepository;
-import com.datastax.enterprise.docapi.banking.PendingTransaction;
-import com.datastax.enterprise.docapi.banking.TransactionMapper;
-import com.datastax.enterprise.docapi.iot.CSV;
-import com.datastax.enterprise.docapi.iot.IoTRepository;
-import com.datastax.enterprise.docapi.iot.Power;
-import com.datastax.enterprise.docapi.person.Person;
+import com.datastax.enterprise.banking.TransactionDocumentAPIRepository;
+import com.datastax.enterprise.banking.PendingTransaction;
+import com.datastax.enterprise.banking.TransactionCQLAPIRepository;
+import com.datastax.enterprise.banking.TransactionMapper;
+import com.datastax.enterprise.banking.TransactionRestAPIRepository;
 import com.datastax.enterprise.docapi.person.PersonModel;
 import com.datastax.enterprise.docapi.person.PersonRepository;
 import com.datastax.oss.driver.api.core.cql.SimpleStatement;
-import com.datastax.stargate.sdk.doc.ApiDocument;
 import com.datastax.stargate.sdk.rest.ApiRestClient;
 import com.datastax.stargate.sdk.rest.TableClient;
-import com.datastax.stargate.sdk.rest.domain.Row;
-import com.datastax.stargate.sdk.rest.domain.RowResultPage;
 import com.datastax.stargate.sdk.rest.domain.SearchTableQuery;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class TransactionController {
@@ -47,14 +37,15 @@ public class TransactionController {
 	@Autowired
 	private AstraClient astraClient;
 	
-	@Autowired
-	private BankingTransactionRepository repository;
 	
 	@Autowired
-	private PersonRepository homeRepository;
+	private TransactionRestAPIRepository trxAPIRepository;
 	
-	private static final String WORKING_KEYSPACE = "enterprise";
-    private static final String WORKING_TABLE    = "pendingtransactions_by_correlationid";
+	@Autowired
+	private TransactionCQLAPIRepository trxCQLRepository;
+	
+//	private static final String WORKING_KEYSPACE = "enterprise";
+//    private static final String WORKING_TABLE    = "pendingtransactions_by_correlationid";
     
     private static ApiRestClient clientApiRest;
     
@@ -68,8 +59,12 @@ public class TransactionController {
 	    
 		 System.out.println("Banking Transactions Begin ....");
 		 
-		 clientApiRest = astraClient.apiStargateData();
-		 TableClient transactionTable = clientApiRest.keyspace(WORKING_KEYSPACE).table(WORKING_TABLE);
+		 /* 
+		  * Handling transactions through Stargate REST API
+		  * */
+		 
+//		 clientApiRest = astraClient.apiStargateData();
+//		 TableClient transactionTable = clientApiRest.keyspace(WORKING_KEYSPACE).table(WORKING_TABLE);
 		 
 		 int correlationId = 999;
 		 int userId = 1000;
@@ -101,7 +96,7 @@ public class TransactionController {
 				 data.put("status","Complete");
 			 }
 			  
-			 transactionTable.upsert(data);
+			 trxAPIRepository.upsert(data);
 			  
 		 }
 		 
@@ -160,13 +155,7 @@ public class TransactionController {
 	 
 	 private List<PendingTransaction> searchTransactions(String value){
 		 
-		 clientApiRest = astraClient.apiStargateData();
-  		 TableClient transactionTable = clientApiRest.keyspace(WORKING_KEYSPACE).table(WORKING_TABLE);
-		 List<PendingTransaction> list = transactionTable.search(SearchTableQuery.builder()
-	             .where("status").isEqualsTo(value)
-	             .build(), new TransactionMapper()).getResults();
-		 
-		 return list;
+		return trxAPIRepository.search("status", value);
 		 
 	 }
 	 
@@ -187,7 +176,7 @@ public class TransactionController {
 	                .create();
 
 	        // Send a message to the topic
-	        producer.send("Hello Ram".getBytes());
+	        producer.send("Initiate ".getBytes());
 	        
 	        System.out.println("Sent the message  ....");
 
@@ -205,8 +194,8 @@ public class TransactionController {
 	    	
 	    	System.out.println("Starting Pulsar Consumer ....");
 	    	
-	    	clientApiRest = astraClient.apiStargateData();
-      		 TableClient transactionTable = clientApiRest.keyspace(WORKING_KEYSPACE).table(WORKING_TABLE);
+//	    	clientApiRest = astraClient.apiStargateData();
+//      		 TableClient transactionTable = clientApiRest.keyspace(WORKING_KEYSPACE).table(WORKING_TABLE);
       		 
 	            // Create client object
 	            PulsarClient client = PulsarClient.builder()
@@ -236,25 +225,24 @@ public class TransactionController {
 
 	                    receivedMsg = true;
 	                    
-	           		 List<PendingTransaction> list = transactionTable.search(SearchTableQuery.builder()
-	                    .where("status").isEqualsTo("Pending")
-	                    .build(), new TransactionMapper()).getResults();
+	           		 List<PendingTransaction> list = trxAPIRepository.search("status", "Pending");
 	           		 
 	           		 System.out.println(" Rows with Status Pending = "+list.size());
 	           		 
-	           		String TABLE_NAME = WORKING_KEYSPACE+"."+WORKING_TABLE;
 	           		 
 	           		 for(PendingTransaction pt : list) {
 	           			 
 	           			 
 	           			/* Using CQL API Begin */
 	           		        
-	           		     SimpleStatement stmt = SimpleStatement.builder("UPDATE "+TABLE_NAME+ " SET status = \'Complete\' WHERE transaction_id = ? AND correlation_id = ?")
-	         	        		.addPositionalValue(pt.getTransactionId())
-	         	        		.addPositionalValue(pt.getCorrelationId())
-	         	                .build();
-	           		     
-	           		     astraClient.cqlSession().execute(stmt);
+//	           		     SimpleStatement stmt = SimpleStatement.builder("UPDATE "+TABLE_NAME+ " SET status = \'Complete\' WHERE transaction_id = ? AND correlation_id = ?")
+//	         	        		.addPositionalValue(pt.getTransactionId())
+//	         	        		.addPositionalValue(pt.getCorrelationId())
+//	         	                .build();
+//	           		     
+//	           		     astraClient.cqlSession().execute(stmt);
+	           			 
+	           			trxCQLRepository.update(pt.getTransactionId(), pt.getCorrelationId());
 	           		     
 	           		    /* Using CQL API END */
 	           			 

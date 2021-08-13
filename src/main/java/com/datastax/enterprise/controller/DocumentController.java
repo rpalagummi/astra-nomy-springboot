@@ -1,4 +1,4 @@
-package com.datastax.enterprise.home;
+package com.datastax.enterprise.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.datastax.enterprise.docapi.banking.PendingTransaction;
+import com.datastax.enterprise.banking.PendingTransaction;
 import com.datastax.enterprise.docapi.person.Person;
 import com.datastax.enterprise.docapi.person.PersonModel;
 import com.datastax.enterprise.docapi.person.PersonRepository;

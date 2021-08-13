@@ -33,11 +33,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import com.datastax.astra.sdk.*;
-import com.datastax.enterprise.docapi.banking.PendingTransaction;
-import com.datastax.enterprise.docapi.iot.CSV;
-import com.datastax.enterprise.docapi.iot.Power;
+import com.datastax.enterprise.banking.PendingTransaction;
 import com.datastax.enterprise.docapi.person.Person;
 import com.datastax.enterprise.docapi.person.Person.Address;
+import com.datastax.enterprise.iot.CSV;
+import com.datastax.enterprise.iot.Power;
 import com.datastax.stargate.sdk.doc.ApiDocument;
 import com.datastax.stargate.sdk.doc.ApiDocumentClient;
 import com.datastax.stargate.sdk.doc.CollectionClient;

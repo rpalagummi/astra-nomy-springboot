@@ -1,4 +1,4 @@
-package com.datastax.enterprise.home;
+package com.datastax.enterprise.controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,49 +8,37 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.datastax.enterprise.docapi.banking.BankingTransactionRepository;
-import com.datastax.enterprise.docapi.iot.CSV;
-import com.datastax.enterprise.docapi.iot.IoTRepository;
-import com.datastax.enterprise.docapi.iot.Power;
-import com.datastax.enterprise.docapi.person.Person;
-import com.datastax.enterprise.docapi.person.PersonModel;
-import com.datastax.enterprise.docapi.person.PersonRepository;
-import com.datastax.stargate.sdk.doc.ApiDocument;
+import com.datastax.enterprise.iot.CSV;
+import com.datastax.enterprise.iot.IoTDocumentAPIRepository;
+import com.datastax.enterprise.iot.Power;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class IoTController {
 
-	@Autowired
-	private BankingTransactionRepository repository;
 	
 	@Autowired
-	private PersonRepository homeRepository;
-	
-	@Autowired
-	private IoTRepository iotRepository;
+	private IoTDocumentAPIRepository iotRepository;
 	
 	
+	String IOT_DATA_FILEPATH = "household-power-consumption-QueryResult.csv";
 	
 	 @GetMapping("/simulateIoT")
 	  public String simulateIoT(Model model) throws FileNotFoundException, IOException {
 	    
 		 System.out.println("Simulating IoT Data ....");
-		 List<Power> iotsensors = convertCSV2JSON("household-power-consumption-QueryResult.csv");
+		 List<Power> iotsensors = convertCSV2JSON(IOT_DATA_FILEPATH);
 		 int i=0;
 		 for(Power power : iotsensors) {
 			 iotRepository.createIoTDocument(power);
 			 i++;
-			 if(i==10) break;
+			 if(i==100) break; // if its a large file, upload is restricted to first 100 records 
 		 }
 		 
 		 System.out.println("IoT Simulation Complete with  "+i+" documents");
@@ -76,7 +64,6 @@ public class IoTController {
 	    	        for (int i = 0; i < fieldNames.size(); i++) {
 	    	            obj.put(fieldNames.get(i), x.get(i));
 	    	        }
-//	    	        list.add(obj);
 	    	        Power power = mapper.convertValue(obj, Power.class);
 	    	        iotList.add(power);
 	    	    }
