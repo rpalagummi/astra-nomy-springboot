@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:8090}
+  port: ${PORT:8080}
 
 spring:
   security:
@@ -7,11 +7,11 @@ spring:
       client:
         provider:
           authProvider:
-            token-uri: https://397d302e-1a86-4186-aec9-bf45a1f7b511-us-east-1.apps.astra.datastax.com/api/rest/v1/auth
+            token-uri: https://xxxxxxxxxxxxxxx-us-east-1.apps.astra.datastax.com/api/rest/v1/auth
         registration:
           authProvider:
-            client-id: tnlKAtjrRvOIwOkZtlhTNWWG
-            client-secret: w82CenP3UUjU_Te0Z8vc6WG.1k.CSl5S4KS5QHgCG2,nv-0mdYBk,UBa8Bp4zdyjGBpw8FQ2NfXj7FBGK.gpkjcL76qtSI3bLbR+lS4c-Mkjk2FJOMCCzUoUK+N25JOJ
+            client-id: 
+            client-secret: 
             authorization-grant-type: client_credentials
   messages:
     basename: i18n/messages
@@ -37,13 +37,13 @@ logging:
     
 
 astra:
-  database-id: 397d302e-1a86-4186-aec9-bf45a1f7b511
+  database-id: 
  
-  client-id: tnlKAtjrRvOIwOkZtlhTNWWG
-  client-secret: w82CenP3UUjU_Te0Z8vc6WG.1k.CSl5S4KS5QHgCG2,nv-0mdYBk,UBa8Bp4zdyjGBpw8FQ2NfXj7FBGK.gpkjcL76qtSI3bLbR+lS4c-Mkjk2FJOMCCzUoUK+N25JOJ
-  application-token: AstraCS:tnlKAtjrRvOIwOkZtlhTNWWG:8404f8a0c6130fac0f8aa5bc94b294113c8d52bdda131956c69c2fb90f6b7c5c
-  cloud-region: us-east-1
-  keyspace: enterprise
+  client-id: 
+  client-secret: 
+  application-token: 
+  cloud-region: 
+  keyspace: 
 
 
 

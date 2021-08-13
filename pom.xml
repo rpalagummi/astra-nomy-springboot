@@ -130,27 +130,27 @@
 						<!--  CREDENTIALS -->
 						<property>
 							<name>ASTRA_DB_ID</name>
-							<value>397d302e-1a86-4186-aec9-bf45a1f7b511</value>
+							<value></value>
 						</property>
 						<property>
 							<name>ASTRA_DB_CLIENT_ID</name>
-							<value>tnlKAtjrRvOIwOkZtlhTNWWG</value>
+							<value></value>
 						</property>
 						<property>
 							<name>ASTRA_DB_CLIENT_SECRET</name>
-							<value>w82CenP3UUjU_Te0Z8vc6WG.1k.CSl5S4KS5QHgCG2,nv-0mdYBk,UBa8Bp4zdyjGBpw8FQ2NfXj7FBGK.gpkjcL76qtSI3bLbR+lS4c-Mkjk2FJOMCCzUoUK+N25JOJ</value>
+							<value></value>
 						</property>
 						<property>
 							<name>ASTRA_DB_APPLICATION_TOKEN</name>
-							<value>AstraCS:tnlKAtjrRvOIwOkZtlhTNWWG:8404f8a0c6130fac0f8aa5bc94b294113c8d52bdda131956c69c2fb90f6b7c5c</value>
+							<value></value>
 						</property>
 						<property>
 							<name>ASTRA_DB_KEYSPACE</name>
-							<value>enterprise</value>
+							<value></value>
 						</property>
 						<property>
 							<name>ASTRA_DB_REGION</name>
-							<value>us-east-1</value>
+							<value></value>
 						</property>
 					</systemProperties>
 						
